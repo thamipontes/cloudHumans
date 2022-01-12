@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InternetTestDTO {
+
     private float download_speed;
     private float upload_speed;
 }

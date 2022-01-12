@@ -23,5 +23,4 @@ public class ProController {
         OutputDTO outputDTO = proService.createOutput(proDTO);
         return new ResponseEntity<>(outputDTO, HttpStatus.OK);
     }
-
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PastExperiencesDTO {
+
     private boolean sales;
     private boolean support;
 }

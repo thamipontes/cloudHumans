@@ -1,0 +1,11 @@
+apply plugin: "com.diffplug.spotless"
+
+spotless {
+    java {
+        endWithNewline()
+        importOrder()
+        prettier(["prettier": "2.4.1", "prettier-plugin-java": "1.4.0"]).config(["parser": "java", "printWidth": 120, "tabWidth": 4])
+        removeUnusedImports()
+        trimTrailingWhitespace()
+    }
+}

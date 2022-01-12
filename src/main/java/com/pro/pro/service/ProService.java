@@ -3,11 +3,10 @@ package com.pro.pro.service;
 import com.pro.pro.enuns.EducationLevel;
 import com.pro.pro.model.DTO.OutputDTO;
 import com.pro.pro.model.DTO.ProDTO;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ProService {
@@ -17,7 +16,7 @@ public class ProService {
     private final String SUPPORT = "support_users_from_xyz";
     private final String COLLECT = "collect_information_for_xpto";
 
-    public OutputDTO createOutput(ProDTO proDTO){
+    public OutputDTO createOutput(ProDTO proDTO) {
         OutputDTO outputDTO = new OutputDTO();
 
         if (proDTO.getAge() < 18) {
@@ -38,41 +37,36 @@ public class ProService {
         return outputDTO;
     }
 
-
-    public Integer eligibilityScoreEducationLevel(String educationLevel){
-        if(EducationLevel.HIGH_SCHOOL.getValor().equals(educationLevel)) return 1;
-        if(EducationLevel.BACHELORS_DEGREE_OR_HIGH.getValor().equals(educationLevel)) return 2;
+    public Integer eligibilityScoreEducationLevel(String educationLevel) {
+        if (EducationLevel.HIGH_SCHOOL.getValor().equals(educationLevel)) return 1;
+        if (EducationLevel.BACHELORS_DEGREE_OR_HIGH.getValor().equals(educationLevel)) return 2;
         return 0;
     }
 
-    public Integer eligibilityScorePastExperiences(boolean sales, boolean support){
-
-        if(sales && support)
-            return 8;
-        if(!sales && !support)
-            return 0;
+    public Integer eligibilityScorePastExperiences(boolean sales, boolean support) {
+        if (sales && support) return 8;
+        if (!sales && !support) return 0;
 
         return sales ? 5 : 3;
     }
 
-    public Integer eligibilityScoreInternetTest(float speed){
+    public Integer eligibilityScoreInternetTest(float speed) {
         return speed > 50 ? 1 : -1;
     }
 
-    public Integer eligibilityScoreWritingScore(float writingScore){
-        if(writingScore < 0.3){
+    public Integer eligibilityScoreWritingScore(float writingScore) {
+        if (writingScore < 0.3) {
             return -1;
-        }else if(writingScore > 0.7){
+        } else if (writingScore > 0.7) {
             return 2;
-        }else
-            return 1;
+        } else return 1;
     }
 
-    public Integer eligibilityScoreReferralCode(String value){
+    public Integer eligibilityScoreReferralCode(String value) {
         return value.equals("token1234") ? 1 : 0;
     }
 
-    public List<String> underAge(){
+    public List<String> underAge() {
         List<String> all = new ArrayList<>();
         all.add(DARK);
         all.add(CAT);
@@ -81,25 +75,20 @@ public class ProService {
         return all;
     }
 
-    public List<String> projectListEligible(Integer score){
-
+    public List<String> projectListEligible(Integer score) {
         List<String> eligibleProject = new ArrayList<>();
 
-        if(score > 10)
-            eligibleProject.add(DARK);
-        if(score > 5)
-            eligibleProject.add(CAT);
-        if(score > 3)
-            eligibleProject.add(SUPPORT);
-        if(score > 2)
-            eligibleProject.add(COLLECT);
+        if (score > 10) eligibleProject.add(DARK);
+        if (score > 5) eligibleProject.add(CAT);
+        if (score > 3) eligibleProject.add(SUPPORT);
+        if (score > 2) eligibleProject.add(COLLECT);
 
         return eligibleProject;
     }
 
-    public List<String> projectListIneligible(List<String> eligibleProject){
+    public List<String> projectListIneligible(List<String> eligibleProject) {
         List<String> ineligibleProject = new ArrayList<>();
-        switch (eligibleProject.size()){
+        switch (eligibleProject.size()) {
             case 1:
                 ineligibleProject.add(SUPPORT);
                 ineligibleProject.add(CAT);
@@ -119,23 +108,20 @@ public class ProService {
         return ineligibleProject;
     }
 
-    public String projectListSelect(Integer score){
-        if(score > 10)
-            return DARK;
-        if(score > 5)
-            return CAT;
-        if(score > 3)
-            return SUPPORT;
-        if(score > 2)
-            return COLLECT;
+    public String projectListSelect(Integer score) {
+        if (score > 10) return DARK;
+        if (score > 5) return CAT;
+        if (score > 3) return SUPPORT;
+        if (score > 2) return COLLECT;
         return "";
     }
 
-    public Integer calculeScore(ProDTO proDTO){
-
+    public Integer calculeScore(ProDTO proDTO) {
         Integer educationLevel = eligibilityScoreEducationLevel(proDTO.getEducation_level());
-        Integer pastExperiences = eligibilityScorePastExperiences(proDTO.getPast_experiences().isSales(),
-                proDTO.getPast_experiences().isSupport());
+        Integer pastExperiences = eligibilityScorePastExperiences(
+            proDTO.getPast_experiences().isSales(),
+            proDTO.getPast_experiences().isSupport()
+        );
         Integer downloadSpeed = eligibilityScoreInternetTest(proDTO.getInternet_test().getDownload_speed());
         Integer uploadSpeed = eligibilityScoreInternetTest(proDTO.getInternet_test().getUpload_speed());
         Integer writingScore = eligibilityScoreWritingScore(proDTO.getWriting_score());
@@ -143,5 +129,4 @@ public class ProService {
 
         return educationLevel + pastExperiences + downloadSpeed + uploadSpeed + writingScore + referralCode;
     }
-
 }

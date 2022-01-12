@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProDTO {
+
     private Integer age;
 
     private String education_level;
