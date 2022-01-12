@@ -31,7 +31,7 @@ public class ProService {
         List<String> eligible = projectListEligible(finalScore);
         outputDTO.setScore(finalScore);
         outputDTO.setEligible_projects(eligible);
-        outputDTO.setIneligible_projects(projectListIneligible(eligible));
+        outputDTO.setIneligible_projects(projectListIneligible(eligible.size()));
         outputDTO.setSelected_project(projectListSelect(finalScore));
 
         return outputDTO;
@@ -86,23 +86,16 @@ public class ProService {
         return eligibleProject;
     }
 
-    public List<String> projectListIneligible(List<String> eligibleProject) {
+    public List<String> projectListIneligible(Integer eligibleProject) {
         List<String> ineligibleProject = new ArrayList<>();
-        switch (eligibleProject.size()) {
+        switch (eligibleProject) {
             case 1:
                 ineligibleProject.add(SUPPORT);
-                ineligibleProject.add(CAT);
-                ineligibleProject.add(DARK);
-                break;
             case 2:
                 ineligibleProject.add(CAT);
-                ineligibleProject.add(DARK);
-                break;
             case 3:
                 ineligibleProject.add(DARK);
-                break;
             default:
-                ineligibleProject.add("");
                 break;
         }
         return ineligibleProject;

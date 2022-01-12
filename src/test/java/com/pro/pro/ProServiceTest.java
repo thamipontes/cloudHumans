@@ -116,10 +116,10 @@ public class ProServiceTest {
     void projectListIneligibleTest() {
         List<String> ineligibleProject = new ArrayList<>();
 
-        ineligibleProject = proService.projectListIneligible(proService.projectListEligible(3));
+        ineligibleProject = proService.projectListIneligible(2);
 
-        assertEquals(3, ineligibleProject.size());
-        assertEquals(SUPPORT, ineligibleProject.get(0));
+        assertEquals(2, ineligibleProject.size());
+        assertEquals(CAT, ineligibleProject.get(0));
     }
 
     @Test
