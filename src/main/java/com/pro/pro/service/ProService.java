@@ -117,16 +117,17 @@ public class ProService {
     }
 
     public Integer calculeScore(ProDTO proDTO) {
-        Integer educationLevel = eligibilityScoreEducationLevel(proDTO.getEducation_level());
-        Integer pastExperiences = eligibilityScorePastExperiences(
+        Integer totalScore = 0;
+        totalScore += eligibilityScoreEducationLevel(proDTO.getEducation_level());
+        totalScore += eligibilityScorePastExperiences(
             proDTO.getPast_experiences().isSales(),
             proDTO.getPast_experiences().isSupport()
         );
-        Integer downloadSpeed = eligibilityScoreInternetTest(proDTO.getInternet_test().getDownload_speed());
-        Integer uploadSpeed = eligibilityScoreInternetTest(proDTO.getInternet_test().getUpload_speed());
-        Integer writingScore = eligibilityScoreWritingScore(proDTO.getWriting_score());
-        Integer referralCode = eligibilityScoreReferralCode(proDTO.getReferral_code());
+        totalScore += eligibilityScoreInternetTest(proDTO.getInternet_test().getDownload_speed());
+        totalScore += eligibilityScoreInternetTest(proDTO.getInternet_test().getUpload_speed());
+        totalScore +=  eligibilityScoreWritingScore(proDTO.getWriting_score());
+        totalScore +=  eligibilityScoreReferralCode(proDTO.getReferral_code());
 
-        return educationLevel + pastExperiences + downloadSpeed + uploadSpeed + writingScore + referralCode;
+        return totalScore;
     }
 }
