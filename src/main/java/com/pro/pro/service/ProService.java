@@ -6,6 +6,8 @@ import com.pro.pro.model.DTO.ProDTO;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.pro.pro.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,7 @@ public class ProService {
     private final String COLLECT = "collect_information_for_xpto";
 
     public OutputDTO createOutput(ProDTO proDTO) {
+        ValidateUtils.validateProDTO(proDTO);
         OutputDTO outputDTO = new OutputDTO();
 
         if (proDTO.getAge() < 18) {
