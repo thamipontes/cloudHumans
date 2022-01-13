@@ -6,4 +6,3 @@ public class ApiRequestExcept extends RuntimeException {
         super(message);
     }
 }
-

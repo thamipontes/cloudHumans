@@ -3,11 +3,10 @@ package com.pro.pro.service;
 import com.pro.pro.enuns.EducationLevel;
 import com.pro.pro.model.DTO.OutputDTO;
 import com.pro.pro.model.DTO.ProDTO;
+import com.pro.pro.utils.ValidateUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import com.pro.pro.utils.ValidateUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -115,14 +114,15 @@ public class ProService {
     public Integer calculeScore(ProDTO proDTO) {
         Integer totalScore = 0;
         totalScore += eligibilityScoreEducationLevel(proDTO.getEducation_level());
-        totalScore += eligibilityScorePastExperiences(
-            proDTO.getPast_experiences().isSales(),
-            proDTO.getPast_experiences().isSupport()
-        );
+        totalScore +=
+            eligibilityScorePastExperiences(
+                proDTO.getPast_experiences().isSales(),
+                proDTO.getPast_experiences().isSupport()
+            );
         totalScore += eligibilityScoreInternetTest(proDTO.getInternet_test().getDownload_speed());
         totalScore += eligibilityScoreInternetTest(proDTO.getInternet_test().getUpload_speed());
-        totalScore +=  eligibilityScoreWritingScore(proDTO.getWriting_score());
-        totalScore +=  eligibilityScoreReferralCode(proDTO.getReferral_code());
+        totalScore += eligibilityScoreWritingScore(proDTO.getWriting_score());
+        totalScore += eligibilityScoreReferralCode(proDTO.getReferral_code());
 
         return totalScore;
     }
